@@ -1,16 +1,34 @@
 "use client";
 
+import { useState, useEffect } from 'react';
 import { useGameState, usePlayerLevel } from '@/lib/gameState';
 import ChapterCard from './ChapterCard';
 import PlayerStats from './PlayerStats';
 import AchievementPanel from './AchievementPanel';
+import WelcomeScreen from './WelcomeScreen';
 
 export default function GameDashboard() {
-  const { chapters } = useGameState();
+  const { chapters, playerProgress } = useGameState();
   const playerLevel = usePlayerLevel();
+  const [showWelcome, setShowWelcome] = useState(false);
+
+  useEffect(() => {
+    // Show welcome screen for new players
+    const hasSeenWelcome = localStorage.getItem('rfc5545-welcome-seen');
+    if (!hasSeenWelcome && playerProgress.totalXP === 0) {
+      setShowWelcome(true);
+    }
+  }, [playerProgress.totalXP]);
+
+  const handleWelcomeComplete = () => {
+    localStorage.setItem('rfc5545-welcome-seen', 'true');
+    setShowWelcome(false);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white">
+      {showWelcome && <WelcomeScreen onComplete={handleWelcomeComplete} />}
+      
       <header className="border-b border-slate-700 bg-slate-900/50 backdrop-blur">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">

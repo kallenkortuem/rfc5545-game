@@ -8,6 +8,7 @@ import { parseICalendar } from '@/lib/icalParser';
 import CodeEditor from './CodeEditor';
 import ValidationPanel from './ValidationPanel';
 import HintPanel from './HintPanel';
+import ReferencePanel from './ReferencePanel';
 
 interface ChallengeInterfaceProps {
   level: Level;
@@ -24,6 +25,7 @@ export default function ChallengeInterface({ level, challenge }: ChallengeInterf
   const [hintsUsed, setHintsUsed] = useState(0);
   const [timeStarted] = useState(Date.now());
   const [isComplete, setIsComplete] = useState(false);
+  const [showReference, setShowReference] = useState(false);
 
   // Validate code whenever it changes
   useEffect(() => {
@@ -122,6 +124,12 @@ export default function ChallengeInterface({ level, challenge }: ChallengeInterf
               </div>
             </div>
             <div className="flex items-center gap-4">
+              <button
+                onClick={() => setShowReference(!showReference)}
+                className="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 rounded text-sm transition-colors flex items-center gap-2"
+              >
+                <span>📖</span> Reference
+              </button>
               <div className="text-sm text-slate-400">
                 {level.xpReward} XP
               </div>
@@ -179,6 +187,16 @@ export default function ChallengeInterface({ level, challenge }: ChallengeInterf
           </div>
         </div>
       </main>
+
+      {/* Reference Panel */}
+      {showReference && (
+        <div className="fixed inset-0 z-40">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setShowReference(false)} />
+          <div className="absolute right-0 top-0 h-full">
+            <ReferencePanel />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
