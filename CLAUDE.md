@@ -4,11 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Next.js 15.4.2 application for an RFC5545 (iCalendar) game. It uses:
+This is a Next.js 15.4.2 gamified learning application for RFC 5545 (iCalendar specification). It uses:
 - React 19.1.0 with TypeScript
 - App Router architecture
 - Tailwind CSS v4 with PostCSS
 - Turbopack for development
+- Local storage for progress persistence
 
 ## Essential Commands
 
@@ -26,25 +27,36 @@ npm run lint       # Run ESLint checks
 
 ## Architecture
 
-The application follows Next.js App Router conventions:
+### Core Systems
+- `src/lib/gameData.ts` - Game progression structure, chapters, levels, achievements
+- `src/lib/gameState.ts` - React Context for game state management with localStorage
+- `src/lib/icalParser.ts` - RFC 5545 compliant parser and validator
+- `src/lib/challenges.ts` - Challenge definitions and validation rules
 
-- `src/app/` - App Router pages and layouts
-- `src/app/layout.tsx` - Root layout with Geist font setup
-- `src/app/page.tsx` - Home page component
-- `src/app/globals.css` - Global styles with Tailwind directives
+### Page Structure
+- `src/app/` - App Router pages
+- `src/app/play/[chapterId]/[levelId]/` - Dynamic route for challenges
+- `src/components/` - React components
 
-TypeScript path alias: `@/*` maps to `./src/*`
+### Key Components
+- `GameDashboard` - Main game interface with chapter progression
+- `ChallengeInterface` - Code editor and validation for challenges
+- `CodeEditor` - Custom iCalendar editor with syntax highlighting
+- `ValidationPanel` - Real-time RFC 5545 validation feedback
+- `ReferencePanel` - Searchable RFC 5545 quick reference
 
-## Key Configuration
+## Game Features
 
-- **TypeScript**: Strict mode enabled with modern ES2017 target
-- **Tailwind CSS v4**: Using new PostCSS plugin approach
-- **ESLint**: Next.js recommended rules with flat config
-- **Dark mode**: Configured via CSS custom properties
+- **4 Main Chapters**: Basics, Data Types, Components, Recurrence
+- **Level Types**: Tutorial, Practice, Challenge, Boss
+- **Progression System**: XP, achievements, star ratings
+- **Real-time Validation**: Instant feedback on iCalendar code
+- **Hint System**: Progressive hints that affect scoring
 
 ## Development Notes
 
-- The project currently has the default Next.js starter template
-- No RFC5545/iCalendar functionality implemented yet
-- No test framework configured
+- Game state persists in localStorage with key 'rfc5545-game-progress'
+- Welcome screen shown once with key 'rfc5545-welcome-seen'
+- TypeScript path alias: `@/*` maps to `./src/*`
+- Dark theme only with slate color palette
 - Uses Geist font family (Sans and Mono variants)
