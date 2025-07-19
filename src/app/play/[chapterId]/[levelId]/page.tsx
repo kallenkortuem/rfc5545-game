@@ -4,6 +4,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useGameState, useCurrentLevel } from '@/lib/gameState';
 import { getChallengeByLevelId } from '@/lib/challenges';
+import { Challenge } from '@/lib/gameData';
 import ChallengeInterface from '@/components/ChallengeInterface';
 import TutorialView from '@/components/TutorialView';
 
@@ -12,13 +13,22 @@ export default function PlayPage() {
   const router = useRouter();
   const { selectLevel } = useGameState();
   const currentLevel = useCurrentLevel();
-  const [challenge, setChallenge] = useState<any>(null);
+  const [challenge, setChallenge] = useState<Challenge | null>(null);
 
   useEffect(() => {
     if (params.chapterId && params.levelId) {
-      selectLevel(params.chapterId as string, params.levelId as string);
-      const levelChallenge = getChallengeByLevelId(params.levelId as string);
-      setChallenge(levelChallenge);
+      const chapterId = params.chapterId as string;
+      const levelId = params.levelId as string;
+      
+      // Construct the full level ID if it's just a number
+      const fullLevelId = levelId.includes('-') ? levelId : `${chapterId}-${levelId}`;
+      
+      console.log('Loading level:', { chapterId, levelId, fullLevelId });
+      
+      selectLevel(chapterId, fullLevelId);
+      const levelChallenge = getChallengeByLevelId(fullLevelId);
+      console.log('Found challenge:', levelChallenge);
+      setChallenge(levelChallenge || null);
     }
   }, [params.chapterId, params.levelId, selectLevel]);
 
