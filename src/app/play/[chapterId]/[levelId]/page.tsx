@@ -12,7 +12,7 @@ export default function PlayPage() {
   const router = useRouter();
   const { selectLevel } = useGameState();
   const currentLevel = useCurrentLevel();
-  const [challenge, setChallenge] = useState(null);
+  const [challenge, setChallenge] = useState<any>(null);
 
   useEffect(() => {
     if (params.chapterId && params.levelId) {
