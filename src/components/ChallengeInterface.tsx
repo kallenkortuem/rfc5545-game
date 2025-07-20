@@ -9,6 +9,7 @@ import CodeEditor from './CodeEditor';
 import ValidationPanel from './ValidationPanel';
 import HintPanel from './HintPanel';
 import ReferencePanel from './ReferencePanel';
+import MarkdownInstructions from './MarkdownInstructions';
 
 interface ChallengeInterfaceProps {
   level: Level;
@@ -149,11 +150,7 @@ export default function ChallengeInterface({ level, challenge }: ChallengeInterf
           <div className="lg:col-span-1 space-y-4">
             <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-6">
               <h2 className="text-lg font-semibold mb-4">{challenge.title}</h2>
-              <div className="prose prose-invert prose-sm max-w-none">
-                <div className="whitespace-pre-wrap text-slate-300">
-                  {challenge.instructions}
-                </div>
-              </div>
+              <MarkdownInstructions content={challenge.instructions} />
             </div>
 
             {/* Hints Panel */}

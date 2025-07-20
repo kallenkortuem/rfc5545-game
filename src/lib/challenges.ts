@@ -62,15 +62,22 @@ Click "Next" to continue learning about iCalendar.`,
     id: "basics-2",
     levelId: "basics-2",
     title: "Your First Calendar",
-    instructions: `Create your first iCalendar file!
+    instructions: `## 🎯 Create your first iCalendar file!
 
-Every iCalendar file must:
-1. Start with BEGIN:VCALENDAR
-2. End with END:VCALENDAR
-3. Include VERSION:2.0
-4. Include a PRODID (Product Identifier)
+Every iCalendar file **must** include:
 
-The PRODID identifies the software that created the calendar. Use "-//Your Name//Your App//EN" format.`,
+### Required Structure
+1. **\`BEGIN:VCALENDAR\`** - Opens the calendar container
+2. **\`END:VCALENDAR\`** - Closes the calendar container
+3. **\`VERSION:2.0\`** - Specifies iCalendar version
+4. **\`PRODID\`** - Product Identifier
+
+### 💡 About PRODID
+The PRODID identifies the software that created the calendar. It follows this format:
+
+    -//Company//Product//Language
+
+**Example:** \`-//My Company//My Calendar App//EN\``,
     startingCode: ``,
     solution: `BEGIN:VCALENDAR
 VERSION:2.0
